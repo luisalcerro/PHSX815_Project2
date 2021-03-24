@@ -43,17 +43,14 @@ class Random:
         return 5.42101086242752217E-20 * self.int64()
 
     # function returns a random integer (0 or 1) according to a Bernoulli distr.
-    def Categorical(self, p1=0.166667,p2=0.166667, p3=0.166667, p4=0.166667, p5=0.166667 ):
+    def Categorical(self, p1=0.25,p2=0.25, p3=0.25):
         if p1 < 0. or p1 > 1.:
             return 1
         if p2 < 0. or p2 > 1.:
             return 2            
         if p3 < 0. or p3 > 1.:
             return 3
-        if p4 < 0. or p4 > 1.:
-            return 4
-        if p5 < 0. or p5 > 1.:
-            return 5
+
                                             
         R = self.rand()
 
@@ -61,26 +58,41 @@ class Random:
             return 1
         if p1< R < p1 + p2:
             return 2
-        if p1 + p2  < R < p1+p2+p3:
+        if p1 + p2  < R < p1 + p2 + p3:
             return 3
-        if p1 + p2 +p3 < R < p1 + p2 + p3 +p4:
-            return 4
-        if p1 + p2 + p3 + p4  < R < p1 + p2 + p3 + p4 + p5:
-            return 5
         else:
-            return 6
+            return 4
 
     # function returns a random double (0 to infty) according to an exponential distribution
     def Exponential(self, beta=1.):
       # make sure beta is consistent with an exponential
-      if beta <= 0.:
-        beta = 1.
+        if beta <= 0.:
+            beta = 1.
 
-      R = self.rand();
+        R = self.rand();
 
-      while R <= 0.:
+        while R <= 0.:
+            R = self.rand()
+
+        X = -math.log(R)/beta
+
+        return X
+
+  
+    def Bernoulli(self, p= 0.5):
+        if p < 0. or p > 1.:
+            return 1
+        
         R = self.rand()
 
-      X = -math.log(R)/beta
+        if R < p:
+            return 1
+        else:
 
-      return X
+            return 0
+
+    def TruncExp(self, beta, bottom, top):
+        a = self.Exponential(beta)
+        while (bottom <= a <= top) == False:
+            a = self.Exponential(beta)
+        return a

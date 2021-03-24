@@ -3,9 +3,9 @@
 
 This repository contains the programs:
 
-- `DiceRoll.py` [Python] 
+- `RWalk.py` [Python] 
 
 ### Usage
 
-All of the executables can be called from the
-command line with the `-h` or `--help` flag, which will print the options
+To reproduce the result, just have to run the script python3 /python/RWalk.py
+RWalk.py is hardcoded with the parameters fixed with the ones I used. 
